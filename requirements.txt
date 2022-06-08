@@ -1,0 +1,2 @@
+# -e git+ssh://git@github.com/elminster-aom/cmdnix.git@b87ff30aee0abcbeb9788f0355ae9b831c799c9a#egg=cmdnix
+click==8.1.3

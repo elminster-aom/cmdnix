@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "cmdnix"
+    ],
+    "files.associations": {},
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "python.analysis.extraPaths": [
+        "./src"
+    ],
+}
