@@ -3,24 +3,21 @@ import subprocess
 
 # Third party imports
 import pytest
+import click.testing
 
 # Local application imports
-from cmdnix.main_commands import ls_command
+from cmdnix.__main__ import cli
+
+cli_runner = click.testing.CliRunner(mix_stderr=False)
 
 
 def _run_command(*args: str) -> tuple[str, str]:
-    cmd_result = subprocess.run(*args, capture_output=True)
-
+    cmd_result = subprocess.run(args, capture_output=True)
     return (cmd_result.stdout.decode(), cmd_result.stderr.decode())
 
 
-def test_ls(capsys) -> None:
-    assert ls_command({"verbose": False}) == None
-
-    # How to write a pytest function for checking console output (stdout/stderr)
-    # https://stackoverflow.com/a/20507769
-    # https://pytest.org/en/latest/reference/reference.html#capsys
-    my_outerr = capsys.readouterr()
-    sys_outerr = _run_command(("ls", "-1", "."))
-    print(sys_outerr)
-    assert my_outerr == sys_outerr
+def test_ls() -> None:
+    sys_result = _run_command("ls", "-1", ".")
+    cli_result = cli_runner.invoke(cli, ["ls", "-1", "."])
+    assert cli_result.exit_code == 0
+    assert sys_result == (cli_result.stdout, cli_result.stderr)

@@ -5,29 +5,29 @@
 import click
 
 # Local application imports
-from cmdnix.main_commands import ls_command
+from cmdnix import ls
+from cmdnix import mylog
+
+log = mylog.getLogger("cmdnix")
 
 
-@click.option("-v",
-              "--verbose",
-              is_flag=True,
-              default=False,
-              help="Verbose mode",
-              type=bool)
 @click.group()
-@click.pass_context
-def main(ctx: click.Context, verbose: bool) -> None:
-    ctx.obj = {
-        "verbose": verbose,
-    }
+@click.option("-v", "--verbose", is_flag=True, help="Verbose mode", type=bool)
+def cli(verbose: bool) -> None:
+    mylog.init_console_logging(log, verbose)
 
 
-@main.command()
-@click.pass_obj
-def ls(ctx_object: dict[str, any]) -> None:
-    print("main_ls", ctx_object)
-    ls_command(ctx_object)
+@cli.command("ls")
+@click.option("-1",
+              "--column",
+              is_flag=True,
+              help="List one file per line",
+              type=bool)
+@click.argument("paths", nargs=-1, type=str)
+def ls_command(column: bool, paths: tuple[str]) -> None:
+    log.debug(f"{column=} {paths=}")
+    ls.main(column, paths)
 
 
 if __name__ == '__main__':
-    main()
+    cli()

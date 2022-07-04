@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
-        "cmdnix"
+        "cmdnix",
+        "mylog",
+        "scandir"
     ],
     "files.associations": {},
     "files.encoding": "utf8",
@@ -9,4 +11,5 @@
     "python.analysis.extraPaths": [
         "./src"
     ],
+    "python.analysis.typeCheckingMode": "strict",
 }
